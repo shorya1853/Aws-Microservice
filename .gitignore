@@ -32,5 +32,10 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+.terraform.*
 
 __pycache__*
+
+
+#Ignore sam files
+.aws-sam*
