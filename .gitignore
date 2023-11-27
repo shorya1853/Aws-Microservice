@@ -39,3 +39,6 @@ __pycache__*
 
 #Ignore sam files
 .aws-sam*
+
+#Ignore zip file
+*.zip
