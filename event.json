@@ -1,3 +1,23 @@
 {
-    "body": {"name": "car",  "price": 122}
+    "body": {
+      "items": [
+        {
+          "name": "item1",
+          "price": 100,
+          "quantity": 2
+        },
+        {
+          "name": "item2",
+          "price": 200,
+          "quantity": 1
+        }
+      ],
+      "card": {
+        "card-no": "1249190007575069",
+        "month": 12,
+        "expiry-year": 2025
+      }
+    }
+    
+      
 }

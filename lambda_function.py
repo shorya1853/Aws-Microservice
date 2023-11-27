@@ -4,10 +4,11 @@ from pay.payment import pay_order
 from pay.processor import PaymentProcessor
 
 
-def read_card_info() -> CreditCard:
-    card = "1249190007575069"
-    month = 12
-    year = 2024
+def read_card_info(card, month, year) -> CreditCard:
+    # "1249190007575069"
+    card = card
+    month = month
+    year = year
     return CreditCard(card, month, year)
 
 
@@ -17,15 +18,24 @@ def lambda_handler(event, context):
     order = Order()
     # LineItem(name="Shoes", price=100_00, quantity=2)
     print(event["body"])
-    order.line_items.append(LineItem(name="Shoes", price=100_00, quantity=2))
-    name = event["body"]["name"]
+    item = event["body"]["items"]
+    for items in item:
+        name = items["name"]
+        price = items["price"]
+        quantity = items["quantity"]
+        order.line_items.append(LineItem(name=name, price=price, quantity=quantity))
+    
     # Read card info from user
-    card = read_card_info()
+    card_req = event["body"]["card"]
+    card_no = card_req["card-no"]
+    month = card_req["month"]
+    exp_year = card_req["expiry-year"]
+    card = read_card_info(card_no, month, exp_year)
     try:
-        pay_order(order, payment_processor, card)
+        result = pay_order(order, payment_processor, card)
     
         return {
-        "message": f"Charging card number {name}", 
+        "message": result, 
         "status": 200
         }
     except Exception as e:
